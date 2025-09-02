@@ -5,11 +5,26 @@ import  {createTodo} from "./utils/createTodo";
 import TodoItem from "./components/TodoItem";
 
 const APP_NAME:string = "Todo App";
-let showTodos:boolean = true;
+
 
 let initialTodos: Todo[] = [
-  { id: 1, text: "Learn TypeScript", completed: false },
-  { id: 2, text: "Build App", completed: true },
+  { id: 1, text: "Learn TypeScript", completed: false, createdAt: new Date().toLocaleString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    }), },
+  { id: 2, text: "Build App", completed: true,createdAt: 
+    new Date().toLocaleString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    }), },
 ];
 
 const App: React.FC = () => {
@@ -45,7 +60,7 @@ const App: React.FC = () => {
       <h1 className="text-2xl font-bold mb-4">{APP_NAME}</h1>
       <button
         onClick={toggleVisibility}
-        className="bg-gray-500 text-white p-2 mb-4"
+        className="bg-gray-500 text-white  px-4 py-2 rounded-md hover:bg-gray-700 mb-4"
       >
         {showTodos ? "Hide Todos" : "Show Todos"}
       </button>
@@ -55,7 +70,10 @@ const App: React.FC = () => {
           value={input}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setInput(e.target.value)
-          }
+          } onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === "Enter") {
+                    addTodo();
+                  }}}        
           placeholder="Add a todo"
           className="border border-gray-300 p-2 rounded-md flex-grow focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
